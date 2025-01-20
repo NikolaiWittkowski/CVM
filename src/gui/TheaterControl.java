@@ -3,7 +3,6 @@ package gui;
 import business.TheaterModel;
 import business.Theaterveranstaltung;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import ownUtil.MeldungsfensterAnzeiger;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -17,37 +16,10 @@ public class TheaterControl {
     public TheaterControl(Stage stage) {
         this.view = new TheaterView(stage);
         this.model = new TheaterModel();
-        this.initListener();
+        this.view.initListener(this);  // Here we initialize listeners in the view with this control
     }
 
-    private void initListener() {
-        view.getMnItmCsvImport().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                bearbeiteImport("csv");
-            }
-        });
-        view.getMnItmTxtImport().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                bearbeiteImport("txt");
-            }
-        });
-        view.getCmbBxName().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                zeigeTheateradresseAn();
-            }
-        });
-        view.getBtnAnzeigeVeranstaltungen().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                zeigeVeranstaltungenAn();
-            }
-        });
-    }
-
-    private void bearbeiteImport(String dateityp) {
+    void bearbeiteImport(String dateityp) {
         try {
             if("csv".equals(dateityp)){
                 model.importFromCsv();
@@ -68,7 +40,7 @@ public class TheaterControl {
         }
     }
 
-    private void zeigeTheateradresseAn() {
+    void zeigeTheateradresseAn() {
         String name = view.getCmbBxName().getValue();
         if (name != null) {
             Theaterveranstaltung theaterveranstaltung = model.getTheaterveranstaltung(name);
@@ -82,7 +54,7 @@ public class TheaterControl {
         }
     }
 
-    private void zeigeVeranstaltungenAn() {
+    void zeigeVeranstaltungenAn() {
         String name = view.getCmbBxName().getValue();
         if (name != null) {
             Theaterveranstaltung theaterveranstaltung = model.getTheaterveranstaltung(name);

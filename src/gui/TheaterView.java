@@ -70,6 +70,13 @@ public class TheaterView {
         pane.getChildren().add(mnbrMenuLeiste);
     }
 
+    public void initListener(TheaterControl control) {
+        mnItmCsvImport.setOnAction(e -> control.bearbeiteImport("csv"));
+        mnItmTxtImport.setOnAction(e -> control.bearbeiteImport("txt"));
+        cmbBxName.setOnAction(e -> control.zeigeTheateradresseAn());
+        btnAnzeigeVeranstaltungen.setOnAction(e -> control.zeigeVeranstaltungenAn());
+    }
+
     public void setzeCmBxName(ArrayList<String> names) {
         this.cmbBxName.getItems().clear();
         this.cmbBxName.getItems().addAll(names);
